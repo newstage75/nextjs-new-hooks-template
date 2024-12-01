@@ -58,13 +58,15 @@ export async function POST(req: Request) {
       await prisma.user.create({
         data: {
           id: evt.data.id,
+          email: JSON.parse(body).data.email_address,
           name: JSON.parse(body).data.username,
           image: JSON.parse(body).data.image_url,
         },
       });
+      return new Response("ユーザーを登録しました", { status: 200 });
     } catch (err) {
       console.log(err);
-      return new Response("ユーザーの方の登録に失敗しました", { status: 500 });
+      return new Response("ユーザーの登録に失敗しました", { status: 500 });
     }
   }
 
