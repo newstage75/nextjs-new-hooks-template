@@ -70,6 +70,25 @@ export async function POST(req: Request) {
     }
   }
 
+  if (eventType === "user.updated") {
+    try {
+      await prisma.user.update({
+        where: {
+          id: evt.data.id,
+        },
+        data: {
+          email: JSON.parse(body).data.email_address,
+          name: JSON.parse(body).data.username,
+          image: JSON.parse(body).data.image_url,
+        },
+      });
+      return new Response("ユーザーを更新しました", { status: 200 });
+    } catch (err) {
+      console.log(err);
+      return new Response("ユーザーの更新に失敗しました", { status: 500 });
+    }
+  }
+
   console.log(`Received webhook with ID ${id} and event type of ${eventType}`);
   console.log("Webhook payload:", body);
 
