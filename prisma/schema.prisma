@@ -11,6 +11,8 @@ model User {
   id        String    @id @default(uuid())
   email     String    @unique
   name      String?
+  bio       String?
+  image     String?
   posts     Post[]
   likes     Like[]
   followers Follows[] @relation("followers")
